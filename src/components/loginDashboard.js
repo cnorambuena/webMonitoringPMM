@@ -6,14 +6,6 @@ import '../assets/css/LogIn.css';
 
 
 export default function Login() {
-  // const navigate = useNavigate();
-
-  // const handleLogin = () => {
-  //   // Realizar lógica de inicio de sesión aquí
-
-  //   // Redirigir a la página /metrics
-  //   navigate('/metrics');
-  // };
 
   return (
     <Container component="main" maxWidth="xl">
@@ -74,7 +66,6 @@ export default function Login() {
               variant="contained"
               color="primary"
               sx={{ mt: 3, mb: 2 }}
-              // onClick={handleLogin}
             >
               Iniciar sesión
             </Button>

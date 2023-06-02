@@ -1,5 +1,9 @@
-// //import React from 'react';
-// //import ReactDOM from 'react-dom/client';
-// import './index.css';
-// //import Header from '../Header';
-// //import Footer from '../Footer';
+import React from 'react';
+// import { useNavigate  } from 'react-router-dom';
+
+
+export default function Alarms() {
+
+    <h1>LISTADO DE ALARMAS</h1>;
+
+}
