@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link } from "react-router-dom";
 import '../assets/css/LogIn.css';
-// import { useNavigate  } from 'react-router-dom';
 
 
 export default function Login() {
@@ -60,15 +60,17 @@ export default function Login() {
                 className: 'white-text',
               }}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Iniciar sesión
-            </Button>
+            <Link to="/metrics" style={{ textDecoration: "none" }}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Iniciar sesión
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Box>

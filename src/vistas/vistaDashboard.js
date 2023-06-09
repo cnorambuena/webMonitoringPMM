@@ -4,6 +4,7 @@ import Header from '../components/headerDashboard';
 import Footer from '../components/footerDashboard';
 import Layout from '../components/layout';
 
+
 const VistaDashboard = () => {
     return(
         <React.StrictMode>

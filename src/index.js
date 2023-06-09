@@ -27,7 +27,12 @@ export default function App() {
         <Route path="/metrics" element={<VistaMetrics/>}> 
           <Route index element={<Metrics />} />
           <Route path="alarmas" element={<Alarms />} />
-          <Route path="detalles-alarma" element={<DetailsAlarm />} />
+          <Route path="alarmas/detalles-alarma1" element={<DetailsAlarm />} />
+          <Route path="alarmas/detalles-alarma2" element={<DetailsAlarm />} />
+          <Route path="alarmas/detalles-alarma3" element={<DetailsAlarm />} />
+          <Route path="alarmas/detalles-alarma4" element={<DetailsAlarm />} />
+          <Route path="alarmas/detalles-alarma5" element={<DetailsAlarm />} />
+          <Route path="alarmas/detalles-alarma6" element={<DetailsAlarm />} />
         </Route>
 
       </Routes>
