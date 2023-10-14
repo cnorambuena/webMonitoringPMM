@@ -11,29 +11,37 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 
 //GET con AXIOS para obtener la data desde endpoint
-  export default function Dashboard(){
-    const [data, setData] = useState([]);
-    const [buzos, setBuzos] = useState([]);
+export default function Dashboard() {
+  const [dataGraph, setData] = useState([]);
+  const [buzos, setBuzos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [id_buzo, setIdBuzo] = useState("1966501785");
 
-    useEffect(()=>{
-      axios.get('http://192.168.1.120:9999/inmersion/13738560?metric=prof')
-        .then((response)=>{
-            setData(response.data);
+  useEffect(() => {
+    // Realizamos ambas solicitudes simultáneamente
+    Promise.all([
+      axios.get(`http://192.168.1.120:9999/inmersion/${id_buzo}?metric=prof`), // Usamos la variable id_buzo
+      axios.get('http://192.168.1.120:9999/buzos/')
+    ])
+      .then((responses) => {
+        setData(responses[0].data);
+        setBuzos(responses[1].data);
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.error('Error de solicitud', error);
+      })
+      .finally(() => {
+        setLoading(false); // Marcar que hemos terminado de cargar los datos
       });
-    },[]);
+  }, [id_buzo]);
 
-    useEffect(()=>{
-      axios.get('http://192.168.1.120:9999/inmersion/13738560?metric=prof')
-        .then((response)=>{
-            setBuzos(response.buzos);
-      })
-      .catch((error)=>{
-        console.error('Error de solicitud', error);
-      });
-    },[]);
+  const handleBuzoChange = (event) => {
+    setIdBuzo(event.target.value); // Actualizamos id_buzo cuando cambia la selección
+  };
+
+  if (loading) {
+    return <div>Cargando...</div>; // Muestra un indicador de carga mientras esperamos los datos.
+  }
 
   return (
 
@@ -45,13 +53,18 @@ import { Button } from "@mui/material";
               Nombres
             </InputLabel>
             <NativeSelect
-              defaultValue={10}
+              value={id_buzo} // Usamos el valor de id_buzo
+              onChange={handleBuzoChange} // Manejador de cambio de selección
               inputProps={{
                 name: 'names',
                 id: 'uncontrolled-native',
               }}
             >
-              <option valueName={10}>Ernesto</option>
+              {buzos.map((buzo)=>(
+                <option key={buzo.id} value={buzo.id}>
+                  {buzo.name}
+                </option>
+              ))}
             </NativeSelect>
           </FormControl>
         </Box>
@@ -70,8 +83,8 @@ import { Button } from "@mui/material";
                   id: 'uncontrolled-native',
                 }}
               >
-                <option valueMetrics={10}>Presión</option>
-                <option valueMetrics={20}>Profundidad</option>
+                <option valueMetrics={10}>Profundidad</option>
+                <option valueMetrics={20}>Presión</option>
               </NativeSelect>
             </FormControl>
           </Box>
@@ -140,7 +153,7 @@ import { Button } from "@mui/material";
           alignItems="flex-start"
         >
            <Grid item xs={12} sm={8} md={6}>
-            <LineChart width={1000} height={600} data={data}>
+            <LineChart width={1000} height={600} data={dataGraph}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
               <YAxis />
@@ -164,20 +177,7 @@ import { Button } from "@mui/material";
           </Button>
         </Link>
       </Grid>
-      <Grid item xs={12}>
-        {buzos && buzos.length > 0 ? (
-          <div>
-            <Typography variant="h4" sx={{ color: "black" }}>
-              DATA - Mayor que 0
-            </Typography>
-          </div>
-        ) : (
-          <Typography variant="h6" sx={{ color: "black" }}>
-            DATA - 0
-          </Typography>
-        )}
-      </Grid>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         {buzos && buzos.length > 0 ? (
           <div>
             <Typography variant="h4" sx={{ color: "black" }}>
@@ -187,6 +187,9 @@ import { Button } from "@mui/material";
               {buzos.map((buzo, id) => (
                 <li key={id}>{buzo.name}</li>
               ))}
+              {buzos.map((buzo, id) => (
+                <li key={id}>{buzo.id}</li>
+              ))}
             </ul>
           </div>
         ) : (
@@ -194,7 +197,7 @@ import { Button } from "@mui/material";
             No hay buzos disponibles.
           </Typography>
         )}
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }
