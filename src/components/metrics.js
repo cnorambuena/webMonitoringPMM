@@ -1,4 +1,5 @@
-import React from "react";
+import React , {useState, useEffect} from "react";
+import axios from "axios";
 import { Grid } from "@mui/material";
 import { Box, Typography } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
@@ -9,18 +10,31 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area } f
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 
+//GET con AXIOS para obtener la data desde endpoint
+  export default function Dashboard(){
+    const [data, setData] = useState([]);
+    const [buzos, setBuzos] = useState([]);
 
-const data = [
-  { month: "Lu", values: 500 },
-  { month: "Ma", values: 800 },
-  { month: "Mi", values: 1200 },
-  { month: "Ju", values: 1000 },
-  { month: "Vi", values: 1500 },
-  { month: "Sa", values: 1300 },
-  { month: "Do", values: 1800 },
-];
+    useEffect(()=>{
+      axios.get('http://192.168.1.120:9999/inmersion/13738560?metric=prof')
+        .then((response)=>{
+            setData(response.data);
+      })
+      .catch((error)=>{
+        console.error('Error de solicitud', error);
+      });
+    },[]);
 
-export default function Dashboard() {
+    useEffect(()=>{
+      axios.get('http://192.168.1.120:9999/inmersion/13738560?metric=prof')
+        .then((response)=>{
+            setBuzos(response.buzos);
+      })
+      .catch((error)=>{
+        console.error('Error de solicitud', error);
+      });
+    },[]);
+
   return (
 
     <Grid container spacing={2}>
@@ -31,15 +45,13 @@ export default function Dashboard() {
               Nombres
             </InputLabel>
             <NativeSelect
-              defaultValue={30}
+              defaultValue={10}
               inputProps={{
                 name: 'names',
                 id: 'uncontrolled-native',
               }}
             >
-              <option value={10}>Ernesto</option>
-              <option value={20}>María</option>
-              <option value={30}>Camila</option>
+              <option valueName={10}>Ernesto</option>
             </NativeSelect>
           </FormControl>
         </Box>
@@ -52,15 +64,14 @@ export default function Dashboard() {
                 Métrica
               </InputLabel>
               <NativeSelect
-                defaultValue={30}
+                defaultValue={10}
                 inputProps={{
-                  name: 'names',
+                  name: 'metrics',
                   id: 'uncontrolled-native',
                 }}
               >
-                <option value={10}>Descompresión</option>
-                <option value={20}>Nivel de nitrógeno</option>
-                <option value={30}>Profundidad</option>
+                <option valueMetrics={10}>Presión</option>
+                <option valueMetrics={20}>Profundidad</option>
               </NativeSelect>
             </FormControl>
           </Box>
@@ -73,22 +84,22 @@ export default function Dashboard() {
                 Período
               </InputLabel>
               <NativeSelect
-                defaultValue={30}
+                defaultValue={10}
                 inputProps={{
-                  name: 'names',
+                  name: 'period',
                   id: 'uncontrolled-native',
                 }}
               >
-                <option value={10}>Último Año</option>
-                <option value={20}>Último Mes</option>
-                <option value={30}>Última Semana</option>
+                <option valuePeriod={10}>Últimos 3 días</option>
+                <option valuePeriod={20}>Últimos 5 días</option>
+                <option valuePeriod={30}>Últimos 7 días</option>
               </NativeSelect>
             </FormControl>
           </Box>
       </Grid>
 
       <Grid item xs={3}>
-        <Box 
+        <Box
           marginLeft={2}
           marginTop={6}
           sx={{
@@ -104,10 +115,10 @@ export default function Dashboard() {
             Datos Históricos del Usuario
           </Typography>
         </Box>
-        
+
         <Box marginLeft={5} marginTop={6}>
           <Typography variant="h6" sx={{ color: "black" }}>
-            Jornadas de buceo : 
+            Jornadas de buceo :
           </Typography>
           <Typography variant="h6" sx={{ color: "black" }}>
             Faltas por periodo de quema :
@@ -128,15 +139,15 @@ export default function Dashboard() {
           justifyContent="flex-start"
           alignItems="flex-start"
         >
-          <Grid item xs={12} sm={8} md={6}>
+           <Grid item xs={12} sm={8} md={6}>
             <LineChart width={1000} height={600} data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
+              <XAxis dataKey="date" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="values" stroke="#8884d8" />
-              <Area type="monotone" dataKey="values" fill="#8884d8" fillOpacity={0.9} />
+              <Line type="monotone" dataKey="prof" stroke="#8884d8" />
+              <Area type="monotone" dataKey="prof" fill="#8884d8" fillOpacity={0.9} />
             </LineChart>
           </Grid>
         </Grid>
@@ -152,6 +163,37 @@ export default function Dashboard() {
             Ver Alarmas
           </Button>
         </Link>
+      </Grid>
+      <Grid item xs={12}>
+        {buzos && buzos.length > 0 ? (
+          <div>
+            <Typography variant="h4" sx={{ color: "black" }}>
+              DATA - Mayor que 0
+            </Typography>
+          </div>
+        ) : (
+          <Typography variant="h6" sx={{ color: "black" }}>
+            DATA - 0
+          </Typography>
+        )}
+      </Grid>
+      <Grid item xs={12}>
+        {buzos && buzos.length > 0 ? (
+          <div>
+            <Typography variant="h4" sx={{ color: "black" }}>
+              Listado de Buzos:
+            </Typography>
+            <ul>
+              {buzos.map((buzo, id) => (
+                <li key={id}>{buzo.name}</li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <Typography variant="h6" sx={{ color: "black" }}>
+            No hay buzos disponibles.
+          </Typography>
+        )}
       </Grid>
     </Grid>
   );

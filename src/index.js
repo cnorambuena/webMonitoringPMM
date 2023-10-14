@@ -9,8 +9,9 @@ import VistaMetrics from './vistas/vistaMetrics';
 import Metrics from './components/metrics';
 import Alarms from './components/alarms';
 import DetailsAlarm from './components/details';
+// import BotonesInicio from './components/botonesInicio';
 
-// Componentes de ejemplo para cada ruta
+// Componentes para cada ruta
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
       <Routes>
 
         <Route path="/" element={<VistaDashboard />}> 
+          {/* <Route path=" " element={<BotonesInicio />} /> */}
           <Route path="login" element={<LogIn />} />
           <Route path="register" element={<Register />} />
           <Route path="about" element={<About />} />
