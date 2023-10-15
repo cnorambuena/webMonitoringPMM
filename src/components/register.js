@@ -78,6 +78,13 @@ export default function Register() {
             >
               Registrarse
             </Button>
+            <Typography
+              variant="body2"
+              color="white"
+              sx={{ textAlign: 'center' }}
+            >
+              Por el momento no es posible registrar nuevos usuarios.
+            </Typography>
           </Box>
         </Box>
       </Box>

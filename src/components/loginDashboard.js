@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import '../assets/css/LogIn.css';
 
-
 export default function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    if (username === 'admin' && password === 'admin') {
+      // Aquí, si las credenciales son correctas, puedes redirigir al usuario a la página de métricas
+      navigate('/metrics');
+      setError(''); // Borramos cualquier mensaje de error previo.
+    } else {
+      setError('Incorrecto. Intente otra vez.');
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xl">
@@ -46,6 +59,8 @@ export default function Login() {
               InputLabelProps={{
                 className: 'white-text',
               }}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -59,18 +74,23 @@ export default function Login() {
               InputLabelProps={{
                 className: 'white-text',
               }}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <Link to="/metrics" style={{ textDecoration: "none" }}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Iniciar sesión
-              </Button>
-            </Link>
+            <Button
+              onClick={handleLogin} // Manejador para verificar las credenciales
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Iniciar sesión
+            </Button>
+            {error && (
+              <Typography variant="body2" color="white" sx={{ textAlign: 'center' }}>
+                {error}
+              </Typography>
+            )}
           </Box>
         </Box>
       </Box>
