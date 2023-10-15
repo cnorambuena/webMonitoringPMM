@@ -16,16 +16,19 @@ export default function Dashboard() {
   const [buzos, setBuzos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [id_buzo, setIdBuzo] = useState("1966501785");
+  const [infoBuzos, setInfoBuzos] = useState([]);
 
   useEffect(() => {
     // Realizamos ambas solicitudes simultáneamente
     Promise.all([
       axios.get(`http://192.168.1.120:9999/inmersion/${id_buzo}?metric=prof`), // Usamos la variable id_buzo
-      axios.get('http://192.168.1.120:9999/buzos/')
+      axios.get('http://192.168.1.120:9999/buzos/?all=True'),
+      axios.get(`http://192.168.1.120:9999/buzos/?buzo_id=${id_buzo}`),
     ])
       .then((responses) => {
         setData(responses[0].data);
         setBuzos(responses[1].data);
+        setInfoBuzos(responses[2].data);
       })
       .catch((error) => {
         console.error('Error de solicitud', error);
@@ -61,8 +64,8 @@ export default function Dashboard() {
               }}
             >
               {buzos.map((buzo)=>(
-                <option key={buzo.id} value={buzo.id}>
-                  {buzo.name}
+                <option key={buzo._id_buzo} value={buzo._id_buzo}>
+                  {buzo.name_buzo}
                 </option>
               ))}
             </NativeSelect>
@@ -103,9 +106,9 @@ export default function Dashboard() {
                   id: 'uncontrolled-native',
                 }}
               >
-                <option valuePeriod={10}>Últimos 3 días</option>
-                <option valuePeriod={20}>Últimos 5 días</option>
-                <option valuePeriod={30}>Últimos 7 días</option>
+                <option valuePeriod={10}>Últimos 3 días</option> {/*ULTIMA INMERSION*/}
+                <option valuePeriod={20}>Últimos 5 días</option> {/*ULTIMOS 7 DIAS*/}
+                <option valuePeriod={30}>Últimos 7 días</option> {/*ULTIMOS 30 DIAS*/}
               </NativeSelect>
             </FormControl>
           </Box>
@@ -130,7 +133,7 @@ export default function Dashboard() {
         </Box>
 
         <Box marginLeft={5} marginTop={6}>
-          <Typography variant="h6" sx={{ color: "black" }}>
+          <Typography variant="h6" sx={{ color: "black" }}> 
             Jornadas de buceo :
           </Typography>
           <Typography variant="h6" sx={{ color: "black" }}>
@@ -140,7 +143,7 @@ export default function Dashboard() {
             Buceo Yoyo:
           </Typography>
           <Typography variant="h6" sx={{ color: "black" }}>
-            Más información historica ...
+            {infoBuzos.company}
           </Typography>
         </Box>
       </Grid>
@@ -178,17 +181,17 @@ export default function Dashboard() {
         </Link>
       </Grid>
       {/* <Grid item xs={12}>
-        {buzos && buzos.length > 0 ? (
+        {infoBuzos && infoBuzos.length > 0 ? (
           <div>
             <Typography variant="h4" sx={{ color: "black" }}>
-              Listado de Buzos:
+              Info de Buzos:
             </Typography>
             <ul>
-              {buzos.map((buzo, id) => (
-                <li key={id}>{buzo.name}</li>
+              {infoBuzos.map((buzo, id) => (
+                <li key={id}>{buzo.name_buzo}</li>
               ))}
-              {buzos.map((buzo, id) => (
-                <li key={id}>{buzo.id}</li>
+              {infoBuzos.map((buzo, id) => (
+                <li key={id}>{buzo._id_buzo}</li>
               ))}
             </ul>
           </div>
