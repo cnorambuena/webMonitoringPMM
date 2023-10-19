@@ -10,12 +10,16 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area } f
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 
+// export function getBuzoID(id_buzo) {
+//   return id_buzo;
+// }
+
 //GET con AXIOS para obtener la data desde endpoint
 export default function Dashboard() {
   const [dataGraph, setData] = useState([]);
   const [buzos, setBuzos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [id_buzo, setIdBuzo] = useState("1256902250");
+  const [id_buzo, setIdBuzo] = useState("916740461");
   const [metricName, setMetric] = useState("prof");
   const [periodDate, setPeriod] = useState("0");
   const [infoBuzos, setInfoBuzos] = useState([]);
@@ -145,17 +149,17 @@ export default function Dashboard() {
         </Box>
 
         <Box marginLeft={5} marginTop={6}>
-          <Typography variant="h6" sx={{ color: "black" }}> 
-            Jornadas de buceo :
+        <Typography variant="body1" sx={{ color: "black" }}> 
+          <span style={{ fontWeight: "bold" }}>Años de buceo: </span>1
+        </Typography>
+          <Typography variant="body1" sx={{ color: "black" }}>
+          <span style={{ fontWeight: "bold" }}>Faltas por periodo de quema : </span>0
           </Typography>
-          <Typography variant="h6" sx={{ color: "black" }}>
-            Faltas por periodo de quema :
+          <Typography variant="body1" sx={{ color: "black" }}>
+          <span style={{ fontWeight: "bold" }}>Buceo Yoyo: </span>Sí
           </Typography>
-          <Typography variant="h6" sx={{ color: "black" }}>
-            Buceo Yoyo:
-          </Typography>
-          <Typography variant="h6" sx={{ color: "black" }}>
-            Compañía: {infoBuzos.company}
+          <Typography variant="body1" sx={{ color: "black" }}>
+          <span style={{ fontWeight: "bold" }}>Compañía: </span>{infoBuzos.company}
           </Typography>
         </Box>
       </Grid>
@@ -170,7 +174,7 @@ export default function Dashboard() {
            <Grid item xs={12} sm={8} md={6}>
             <LineChart width={1000} height={600} data={dataGraph}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
+              <XAxis dataKey="date" tickCount={5} tick={{ fontSize: 12 }}/>
               <YAxis />
               <Tooltip />
               <Legend />

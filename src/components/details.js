@@ -31,25 +31,25 @@ export default function DetailsAlarm() {
       <Grid item xs={7} justifyContent="center">
         <Box marginTop={0}>
           <Typography variant="h4" align="right" sx={{ color: "black" }}>
-            Nombre Alarma
+            Máximo de profundidad
           </Typography>
         </Box>
       </Grid>
       <Grid item xs={5} justifyContent="center">
         <Box marginTop={0} >
-          {generarCirculo("orange", 2)}
+          {generarCirculo("red", 4)}
         </Box>
       </Grid>
 
       <Grid item xs={12} justifyContent="center">
         <Box marginTop={0}>
           <Typography variant="h6" align="center" sx={{ color: "grey" }}>
-            Nombre Usuario
+            Esmeralda Ana
           </Typography>
         </Box>
       </Grid>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={4}>
         <Grid justifyContent="center">
           <Box marginLeft={12} marginTop={8}>
             <TableContainer component={Box} sx={{ backgroundColor: "white", border: "1px solid black", width: "400px" , height: "400px"}}>
@@ -58,7 +58,7 @@ export default function DetailsAlarm() {
                   <TableRow>
                     <TableCell sx={{ backgroundColor: "#2074d4", color: "white", width: "100%" }}>
                       <Typography variant="subtitle1" align="center">
-                        Fecha 1
+                        Fecha infracción: 07/10/2023
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -67,7 +67,21 @@ export default function DetailsAlarm() {
                   <TableRow>
                     <TableCell>
                       <Typography variant="body1" color="black">
-                        table cell info
+                      <span style={{ fontWeight: "bold" }}>Hora de inicio Inmersión: </span>5:10 Hrs
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="body1" color="black">
+                      <span style={{ fontWeight: "bold" }}>Hora de la falta: </span>5:45 Hrs
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="body1" color="black">
+                      <span style={{ fontWeight: "bold" }}>Profundidad máxima: </span>46 mts
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -78,14 +92,14 @@ export default function DetailsAlarm() {
         </Grid>
         
         <Grid justifyContent="center">
-          <Box marginLeft={10} marginTop={8}>
+          <Box marginLeft={5} marginTop={8}>
             <TableContainer component={Box} sx={{ backgroundColor: "white", border: "1px solid black", width: "400px" , height: "400px"}}>
               <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell sx={{ backgroundColor: "#2074d4", color: "white", width: "100%" }}>
                       <Typography variant="subtitle1" align="center">
-                        Fecha 2
+                      Fecha infracción: 06/10/2023 - 07/10/23
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -94,7 +108,21 @@ export default function DetailsAlarm() {
                   <TableRow>
                     <TableCell>
                       <Typography variant="body1" color="black">
-                        table cell info
+                      <span style={{ fontWeight: "bold" }}>Hora de inicio Inmersión: </span>23:10 Hrs
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="body1" color="black">
+                      <span style={{ fontWeight: "bold" }}>Hora de la falta: </span>00:09 Hrs
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="body1" color="black">
+                      <span style={{ fontWeight: "bold" }}>Profundidad máxima: </span>42 mts
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -105,14 +133,14 @@ export default function DetailsAlarm() {
         </Grid>
 
         <Grid justifyContent="center">
-          <Box marginRight={6} marginLeft={10} marginTop={8}>
+          <Box marginLeft={5} marginTop={8}>
             <TableContainer component={Box} sx={{ backgroundColor: "white", border: "1px solid black", width: "400px" , height: "400px"}}>
               <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell sx={{ backgroundColor: "#2074d4", color: "white", width: "100%" }}>
                       <Typography variant="subtitle1" align="center">
-                        Fecha 3
+                      Fecha infracción: 12/10/2023
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -121,7 +149,62 @@ export default function DetailsAlarm() {
                   <TableRow>
                     <TableCell>
                       <Typography variant="body1" color="black">
-                        table cell info
+                      <span style={{ fontWeight: "bold" }}>Hora de inicio Inmersión: </span>13:35 Hrs
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="body1" color="black">
+                      <span style={{ fontWeight: "bold" }}>Hora de la falta: </span>14:10 Hrs
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="body1" color="black">
+                      <span style={{ fontWeight: "bold" }}>Profundidad máxima: </span>65 mts
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        </Grid>
+
+        <Grid justifyContent="center">
+          <Box marginRight={6} marginLeft={5} marginTop={8}>
+            <TableContainer component={Box} sx={{ backgroundColor: "white", border: "1px solid black", width: "400px" , height: "400px"}}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ backgroundColor: "#2074d4", color: "white", width: "100%" }}>
+                      <Typography variant="subtitle1" align="center">
+                      Fecha infracción: 15/10/2023
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="body1" color="black">
+                      <span style={{ fontWeight: "bold" }}>Hora de inicio Inmersión: </span>4:10 Hrs
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="body1" color="black">
+                      <span style={{ fontWeight: "bold" }}>Hora de la falta: </span>4:49 Hrs
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="body1" color="black">
+                      <span style={{ fontWeight: "bold" }}>Profundidad máxima: </span>43 mts
                       </Typography>
                     </TableCell>
                   </TableRow>

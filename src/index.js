@@ -10,14 +10,15 @@ import Metrics from './components/metrics';
 import Alarms from './components/alarms';
 import DetailsAlarm from './components/details';
 // import BotonesInicio from './components/botonesInicio';
+// import { Box, Button } from '@mui/material';
+// import { Link } from 'react-router-dom';
 
-// Componentes para cada ruta
+
 
 export default function App() {
   return (
-    <BrowserRouter>
+      <BrowserRouter>
       <Routes>
-
         <Route path="/" element={<VistaDashboard />}> 
           {/* <Route path=" " element={<BotonesInicio />} /> */}
           <Route path="login" element={<LogIn />} />
@@ -36,7 +37,6 @@ export default function App() {
           <Route path="alarmas/detalles-alarma5" element={<DetailsAlarm />} />
           <Route path="alarmas/detalles-alarma6" element={<DetailsAlarm />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   );
