@@ -15,15 +15,17 @@ export default function Dashboard() {
   const [dataGraph, setData] = useState([]);
   const [buzos, setBuzos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [id_buzo, setIdBuzo] = useState("1966501785");
+  const [id_buzo, setIdBuzo] = useState("1256902250");
+  const [metricName, setMetric] = useState("prof");
+  const [periodDate, setPeriod] = useState("0");
   const [infoBuzos, setInfoBuzos] = useState([]);
 
   useEffect(() => {
     // Realizamos ambas solicitudes simultáneamente
     Promise.all([
-      axios.get(`http://192.168.1.120:9999/inmersion/${id_buzo}?metric=prof`), // Usamos la variable id_buzo
-      axios.get('http://192.168.1.120:9999/buzos/?all=True'),
-      axios.get(`http://192.168.1.120:9999/buzos/?buzo_id=${id_buzo}`),
+      axios.get(`http://192.168.1.106:9999/inmersion/${id_buzo}?metric=${metricName}&days=${periodDate}`), // Usamos la variable id_buzo
+      axios.get('http://192.168.1.106:9999/buzos/?all=True'),
+      axios.get(`http://192.168.1.106:9999/buzos/?buzo_id=${id_buzo}`),
     ])
       .then((responses) => {
         setData(responses[0].data);
@@ -36,18 +38,25 @@ export default function Dashboard() {
       .finally(() => {
         setLoading(false); // Marcar que hemos terminado de cargar los datos
       });
-  }, [id_buzo]);
+  }, [id_buzo, metricName, periodDate]);
 
   const handleBuzoChange = (event) => {
     setIdBuzo(event.target.value); // Actualizamos id_buzo cuando cambia la selección
   };
+
+  const handleMetricChange = (event) =>{
+    setMetric(event.target.value); // Actualizacion de metrica
+  }
+
+  const handlePeriodChange = (event) =>{
+    setPeriod(event.target.value); // Actualizacion de rango de fechas para grafica
+  }
 
   if (loading) {
     return <div>Cargando...</div>; // Muestra un indicador de carga mientras esperamos los datos.
   }
 
   return (
-
     <Grid container spacing={2}>
       <Grid item xs={4}>
         <Box marginTop={0} marginLeft={2} sx={{ minWidth: 120 }}>
@@ -80,14 +89,16 @@ export default function Dashboard() {
                 Métrica
               </InputLabel>
               <NativeSelect
-                defaultValue={10}
+                value={metricName}
+                onChange={handleMetricChange} //Manejador de cambio de selección de metrica
                 inputProps={{
                   name: 'metrics',
                   id: 'uncontrolled-native',
                 }}
               >
-                <option valueMetrics={10}>Profundidad</option>
-                <option valueMetrics={20}>Presión</option>
+                <option key={"prof"} value={"prof"}>Profundidad</option>
+                <option key={"presion"} value={"presion"}>Presión</option>
+                <option key={"nitro"} value={"nitro"}>Nitrógeno</option>
               </NativeSelect>
             </FormControl>
           </Box>
@@ -100,15 +111,16 @@ export default function Dashboard() {
                 Período
               </InputLabel>
               <NativeSelect
-                defaultValue={10}
+                value={periodDate}
+                onChange={handlePeriodChange}
                 inputProps={{
                   name: 'period',
                   id: 'uncontrolled-native',
                 }}
               >
-                <option valuePeriod={10}>Últimos 3 días</option> {/*ULTIMA INMERSION*/}
-                <option valuePeriod={20}>Últimos 5 días</option> {/*ULTIMOS 7 DIAS*/}
-                <option valuePeriod={30}>Últimos 7 días</option> {/*ULTIMOS 30 DIAS*/}
+                <option key={0} value={0}>Última Inmersión</option> {/*ULTIMA INMERSION*/}
+                <option key={7} value={7}>Últimos 7 días</option> {/*ULTIMOS 7 DIAS*/}
+                <option key={30} value={30}>Últimos 30 días</option> {/*ULTIMOS 30 DIAS*/}
               </NativeSelect>
             </FormControl>
           </Box>
@@ -143,7 +155,7 @@ export default function Dashboard() {
             Buceo Yoyo:
           </Typography>
           <Typography variant="h6" sx={{ color: "black" }}>
-            {infoBuzos.company}
+            Compañía: {infoBuzos.company}
           </Typography>
         </Box>
       </Grid>
@@ -162,8 +174,8 @@ export default function Dashboard() {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="prof" stroke="#8884d8" />
-              <Area type="monotone" dataKey="prof" fill="#8884d8" fillOpacity={0.9} />
+              <Line type="monotone" dataKey={metricName} stroke="#8884d8" />
+              <Area type="monotone" dataKey={metricName} fill="#8884d8" fillOpacity={0.9} />
             </LineChart>
           </Grid>
         </Grid>
@@ -198,6 +210,7 @@ export default function Dashboard() {
         ) : (
           <Typography variant="h6" sx={{ color: "black" }}>
             No hay buzos disponibles.
+            {periodDate}
           </Typography>
         )}
       </Grid> */}
